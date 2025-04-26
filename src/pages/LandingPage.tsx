@@ -59,14 +59,34 @@ const LandingPage = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-wrap justify-center gap-4"
             >
-              <Link to="/signup" className="btn-primary">
+              <Link to="/dashboard" className="btn-primary">
                 Get Started <ArrowRight size={18} className="ml-2 inline" />
               </Link>
-              <Link to="/login" className="btn-outline">
-                Sign In
+              <Link to="/chat" className="btn-outline">
+                Chat with InnoBot
               </Link>
             </motion.div>
           </div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-20 max-w-5xl mx-auto"
+          >
+            <div className="relative">
+              <div className="rounded-2xl overflow-hidden shadow-xl">
+                <img
+                  src="https://images.pexels.com/photos/3560044/pexels-photo-3560044.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  alt="InnerNova Dashboard Preview"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-2xl flex items-end justify-center pb-8">
+                <p className="text-white text-xl font-medium">Your journey to inner peace begins here</p>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -112,7 +132,7 @@ const LandingPage = () => {
           <p className="text-lg text-neutral-700 dark:text-neutral-300 mb-8">
             Join our community of mindful individuals committed to nurturing their mental wellbeing.
           </p>
-          <Link to="/signup" className="btn-primary">
+          <Link to="/dashboard" className="btn-primary">
             Start Now <ArrowRight size={18} className="ml-2 inline" />
           </Link>
         </motion.div>
