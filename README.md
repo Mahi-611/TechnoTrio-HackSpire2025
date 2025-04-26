@@ -31,13 +31,6 @@
 
 ---
 
-## 🛠️ Built With  
-Frontend: React.js + Tailwind CSS  
-Backend: Node.js + FastAPI (Python)  
-Database: Supabase  
-NLP & AI: Gemini Free API, Sentiment Analysis, Machine Learning  
-
-"Rest, Reflect, and Rise with InnerNova." 🌷
 
 ✨ Let's Grow Together 🌱  
 Feel free to contribute, suggest ideas, and spread positivity! 🚀🌸
