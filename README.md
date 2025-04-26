@@ -14,9 +14,3 @@ Personalized Suggestions – Music, books, and activities tailored to your mood.
 
 Voice Support (Bonus!) – Speak your feelings instead of typing.
 
-🛠 Built With
-Frontend: React
-
-Backend: Node.js (Express) + Flask (AI)
-
-Database: MongoDB
