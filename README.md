@@ -1,9 +1,9 @@
-#🌿 InnerNova: A Gentle Space for Your Mind  
-🌈 Welcome to InnerNova — a soothing mental wellness companion designed to uplift, inspire, and support your emotional journey. 🧘✨
+# 🌿 InnerNova: A Gentle Space for Your Mind  
+## 🌈 Welcome to InnerNova — a soothing mental wellness companion designed to uplift, inspire, and support your emotional journey. 🧘✨
 
 🚀 **Live Demo:** https://innernova.netlify.app/
 
-🌸 What InnerNova Offers  
+ ## 🌸 What InnerNova Offers  
 💬 InnoBot: Your friendly AI chatbot, ready to listen and lift your mood with mindful conversations.
 
 🗣️ Voice Input & Output: Speak your heart out — InnerNova understands. 🎙️
@@ -31,7 +31,7 @@
 
 ---
 
-🛠️ Built With  
+## 🛠️ Built With  
 Frontend: React.js + Tailwind CSS  
 Backend: Node.js + FastAPI (Python)  
 Database: Supabase  
@@ -39,5 +39,5 @@ NLP & AI: Gemini Free API, Sentiment Analysis, Machine Learning
 
 "Rest, Reflect, and Rise with InnerNova." 🌷
 
-✨ Let's Grow Together 🌱  
-Feel free to contribute, suggest ideas, and spread positivity! 🚀🌸
+## ✨ Let's Grow Together 🌱  
+## Feel free to contribute, suggest ideas, and spread positivity! 🚀🌸
