@@ -1,6 +1,8 @@
 🌿 InnerNova: A Gentle Space for Your Mind 🌈
 Welcome to InnerNova — a soothing mental wellness companion designed to uplift, inspire, and support your emotional journey. 🧘✨
 
+🚀 **Live Demo:** https://innernova.netlify.app/
+
 🌸 What InnerNova Offers
 💬 InnoBot: Your friendly AI chatbot, ready to listen and lift your mood with mindful conversations.
 
