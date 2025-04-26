@@ -1,4 +1,4 @@
-import { useState } from 'react';
+/*import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, User, ArrowRight } from 'lucide-react';
@@ -164,7 +164,7 @@ const SignupPage = () => {
             </p>
           </div>
         </div>
-      </motion.div>
+      </motion.div> */
     </AnimatedBackground>
   );
 };
