@@ -1,16 +1,22 @@
-# TechnoTrio-HackSpire2025
-InnerNova
-💡 Your AI-Powered Mental Wellness Companion
+🌿 InnerNova: A Gentle Space for Your Mind 🌈
+Welcome to InnerNova — a soothing mental wellness companion designed to uplift, inspire, and support your emotional journey. 🧘✨
 
-🌟 Why InnerNova?
-In a fast-paced world, mental health often takes a backseat. InnerNova is a web-based wellness app that uses AI & NLP to provide personalized emotional support through interactive conversations.
+🌸 What InnerNova offers:
+💬 InnoBot: Your friendly AI chatbot, ready to listen and lift your mood with mindful conversations.
+🗣️ Voice Input & Output: Speak your heart out — InnerNova understands. 🎙️
+🌟 Positive Affirmations: Tailored affirmations to motivate and brighten your day.
+📈 Mood Progress Tracker: Visualize your emotional growth through calming, beautiful graphs.
+🎵 Personalized Recommendations: Feel-good music, movies, and books, chosen just for you.
+🤝 Community Connections: Find your tribe on Discord, Reddit, and Instagram!
+🔔 Daily Check-ins: Gentle reminders to nurture your inner peace.
+🧡 Motivational Quotes Page: Daily doses of hope, kindness, and encouragement.
+🎨 Beautiful Inside and Out:
 
-✨ Key Highlights
-Chatbot Check-Ins – Talk to an AI companion about your day.
+Light & Dark Modes ☀️🌙
+Calming animated backgrounds 🌄☁️
+Soft pastel and deep blue color palettes 🌿💙
+Cozy emojis sprinkled throughout for an extra touch of warmth 🌻🍃🕊️
 
-Interactive Mood Analysis – Detects emotions using sentiment analysis.
+Built with ❤️ using React.js, Tailwind CSS, Node.js, Supabase, FastAPI, and a pinch of magic. ✨
 
-Personalized Suggestions – Music, books, and activities tailored to your mood.
-
-Voice Support (Bonus!) – Speak your feelings instead of typing.
-
+"Rest, Reflect, and Rise with InnerNova." 🌷
