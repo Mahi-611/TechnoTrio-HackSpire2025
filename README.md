@@ -39,5 +39,5 @@ NLP & AI: Gemini Free API, Sentiment Analysis, Machine Learning
 
 "Rest, Reflect, and Rise with InnerNova." 🌷
 
-## ✨ Let's Grow Together 🌱  
-## Feel free to contribute, suggest ideas, and spread positivity! 🚀🌸
+✨ Let's Grow Together 🌱  
+Feel free to contribute, suggest ideas, and spread positivity! 🚀🌸
