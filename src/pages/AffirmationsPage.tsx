@@ -1,68 +1,51 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, RefreshCw, Download, Share2 } from 'lucide-react';
-
-const affirmations = [
-  "I am worthy of love and respect, just as I am.",
-  "I embrace my emotions as valid and important messengers.",
-  "I give myself permission to rest and recharge without guilt.",
-  "My thoughts and feelings matter and deserve to be acknowledged.",
-  "I am resilient and can navigate life's challenges with grace.",
-  "I honor my boundaries and respect my needs.",
-  "Healing takes time, and I am patient with my journey.",
-  "I am growing and evolving every day, even when it's hard to see.",
-  "My presence in this world makes a positive difference.",
-  "I release the need to compare my journey to others'.",
-  "I choose to focus on progress, not perfection.",
-  "Today, I will be kind to myself in thoughts, words, and actions.",
-  "I trust in my ability to handle whatever comes my way."
-];
-
-const backgrounds = [
-  "bg-gradient-to-br from-green-400 to-blue-500",
-  "bg-gradient-to-br from-purple-400 to-pink-500",
-  "bg-gradient-to-br from-yellow-400 to-orange-500",
-  "bg-gradient-to-br from-blue-400 to-indigo-500",
-  "bg-gradient-to-br from-red-400 to-pink-500",
-  "bg-gradient-to-br from-teal-400 to-blue-500",
-];
+import axios from 'axios';
 
 const AffirmationsPage = () => {
   const [currentAffirmation, setCurrentAffirmation] = useState("");
   const [currentBackground, setCurrentBackground] = useState("");
   const [liked, setLiked] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  
+
+  useEffect(() => {
+    // Fetch affirmations and backgrounds from the backend
+    axios.get('/api/affirmations-data').then((response) => {
+      const { affirmations, backgrounds } = response.data;
+      const randomAffirmation = affirmations[Math.floor(Math.random() * affirmations.length)];
+      const randomBackground = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+
+      setCurrentAffirmation(randomAffirmation);
+      setCurrentBackground(randomBackground);
+    });
+  }, []);
+
   const generateAffirmation = () => {
     setIsGenerating(true);
     setLiked(false);
-    
-    // Simulate AI generation
-    setTimeout(() => {
+
+    // Fetch new affirmation and background
+    axios.get('/api/affirmations-data').then((response) => {
+      const { affirmations, backgrounds } = response.data;
       const randomAffirmation = affirmations[Math.floor(Math.random() * affirmations.length)];
       const randomBackground = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-      
+
       setCurrentAffirmation(randomAffirmation);
       setCurrentBackground(randomBackground);
       setIsGenerating(false);
-    }, 800);
+    });
   };
-  
-  useEffect(() => {
-    generateAffirmation();
-  }, []);
-  
+
   const handleLike = () => {
     setLiked(!liked);
   };
-  
+
   const handleShare = () => {
-    // This would be replaced with actual share functionality
     alert("Sharing functionality would be implemented here!");
   };
-  
+
   const handleDownload = () => {
-    // This would be replaced with actual download functionality
     alert("Download functionality would be implemented here!");
   };
 
@@ -80,14 +63,14 @@ const AffirmationsPage = () => {
             Nurture your mind with positive affirmations tailored for you 🌱
           </p>
         </motion.div>
-        
+
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
           className="mb-8"
         >
-          <div 
+          <div
             className={`relative rounded-xl shadow-lg overflow-hidden aspect-video flex items-center justify-center p-8 ${currentBackground}`}
           >
             {isGenerating ? (
@@ -107,7 +90,7 @@ const AffirmationsPage = () => {
             )}
           </div>
         </motion.div>
-        
+
         <div className="flex justify-center space-x-4 mb-12">
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -119,7 +102,7 @@ const AffirmationsPage = () => {
           >
             <Heart size={24} className={liked ? 'fill-current text-pink-500' : ''} />
           </motion.button>
-          
+
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -131,7 +114,7 @@ const AffirmationsPage = () => {
           >
             <RefreshCw size={24} className={isGenerating ? 'animate-spin' : ''} />
           </motion.button>
-          
+
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -142,7 +125,7 @@ const AffirmationsPage = () => {
           >
             <Download size={24} />
           </motion.button>
-          
+
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -154,7 +137,7 @@ const AffirmationsPage = () => {
             <Share2 size={24} />
           </motion.button>
         </div>
-        
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -172,7 +155,7 @@ const AffirmationsPage = () => {
               Our affirmations are crafted to support mental wellness and inner strength.
             </p>
           </div>
-          
+
           <div className="card">
             <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">How to Use Affirmations</h2>
             <ol className="text-neutral-700 dark:text-neutral-400 space-y-2 list-decimal pl-4">

@@ -3,23 +3,14 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { MessageCircle, Heart, LineChart, Quote, ArrowRight } from 'lucide-react';
 import { useThemeStore } from '../store/themeStore';
-
-// Mock data - would be replaced with real data from Supabase
-const moodData = [
-  { day: 'Mon', level: 6 },
-  { day: 'Tue', level: 8 },
-  { day: 'Wed', level: 7 },
-  { day: 'Thu', level: 9 },
-  { day: 'Fri', level: 5 },
-  { day: 'Sat', level: 8 },
-  { day: 'Sun', level: 8 },
-];
+import axios from 'axios';
 
 const Dashboard = () => {
   const { darkMode } = useThemeStore();
   const [greeting, setGreeting] = useState('');
   const [quote, setQuote] = useState({ text: '', author: '' });
-  
+  const [moodData, setMoodData] = useState([]);
+
   // Set greeting based on time of day
   useEffect(() => {
     const hour = new Date().getHours();
@@ -31,16 +22,14 @@ const Dashboard = () => {
       setGreeting('Good evening');
     }
   }, []);
-  
-  // Set random quote
+
+  // Fetch dashboard data from the backend
   useEffect(() => {
-    const quotes = [
-      { text: 'You are not a drop in the ocean. You are the entire ocean in a drop.', author: 'Rumi' },
-      { text: "Your present circumstances don't determine where you can go; they merely determine where you start.", author: 'Nido Qubein' },
-      { text: 'The wound is the place where the Light enters you.', author: 'Rumi' },
-      { text: 'In the midst of winter, I found there was, within me, an invincible summer.', author: 'Albert Camus' },
-    ];
-    setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+    axios.get('/api/dashboard/dashboard-data').then((response) => {
+      const { quotes, moodData } = response.data;
+      setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+      setMoodData(moodData);
+    });
   }, []);
 
   const cards = [

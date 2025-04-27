@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { User, Mail, Bell, Moon, Sun, Lock, LogOut, Edit2, Check, X } from 'lucide-react';
+import axios from 'axios';
 
 const ProfilePage = () => {
   const [user, setUser] = useState({
@@ -19,24 +20,33 @@ const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(user.name);
   
-  const handleToggleSetting = (setting: keyof typeof settings) => {
-    setSettings({
-      ...settings,
-      [setting]: !settings[setting],
+  useEffect(() => {
+    // Fetch user profile and settings from the backend
+    axios.get('/api/profile/profile').then((response) => {
+      setUser(response.data.user);
+      setSettings(response.data.settings);
     });
-  };
+  }, []);
   
   const handleSaveProfile = () => {
-    setUser({
-      ...user,
-      name: editedName,
+    axios.put('/api/profile/profile', { name: editedName }).then((response) => {
+      setUser(response.data.user);
+      setIsEditing(false);
     });
-    setIsEditing(false);
   };
   
   const handleCancelEdit = () => {
     setEditedName(user.name);
     setIsEditing(false);
+  };
+  
+  const handleToggleSetting = (setting: keyof typeof settings) => {
+    const updatedSettings = { ...settings, [setting]: !settings[setting] };
+    setSettings(updatedSettings);
+
+    axios.put('/api/profile/settings', updatedSettings).then((response) => {
+      setSettings(response.data.settings);
+    });
   };
 
   return (

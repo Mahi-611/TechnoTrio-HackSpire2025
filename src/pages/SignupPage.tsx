@@ -1,9 +1,9 @@
-/*import { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, User, ArrowRight } from 'lucide-react';
-import { supabase } from '../utils/supabaseClient';
 import AnimatedBackground from '../components/ui/AnimatedBackground';
+import axios from 'axios';
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -19,36 +19,17 @@ const SignupPage = () => {
     setLoading(true);
 
     try {
-      const { data: authData, error: authError } = await supabase.auth.signUp({
+      const response = await axios.post('/api/auth/signup', {
+        name,
         email,
         password,
-        options: {
-          data: {
-            full_name: name,
-          },
-        },
       });
 
-      if (authError) throw authError;
-
-      if (authData.user) {
-        // Create user profile in the profiles table
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert([
-            {
-              id: authData.user.id,
-              full_name: name,
-              email: email,
-            },
-          ]);
-
-        if (profileError) throw profileError;
-
+      if (response.status === 201) {
         navigate('/dashboard');
       }
     } catch (error: any) {
-      setError(error.message || 'An error occurred during signup');
+      setError(error.response?.data?.message || 'An error occurred during signup');
     } finally {
       setLoading(false);
     }
@@ -164,7 +145,7 @@ const SignupPage = () => {
             </p>
           </div>
         </div>
-      </motion.div> */
+      </motion.div>
     </AnimatedBackground>
   );
 };

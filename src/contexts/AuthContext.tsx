@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../utils/supabaseClient';
+import axios from 'axios';
 import type { User } from '@supabase/supabase-js';
 
 interface AuthContextType {
@@ -24,22 +24,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     // Check active sessions and sets the user
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-
-    // Listen for changes on auth state
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
+    axios
+      .get('/api/auth/verify', {
+        headers: { Authorization: `Bearer valid-token` }, // Replace with real token logic
+      })
+      .then((response) => {
+        setUser(response.data.user);
+        setLoading(false);
+      })
+      .catch(() => {
+        setUser(null);
+        setLoading(false);
+      });
   }, []);
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    await axios.post('/api/auth/logout');
+    setUser(null);
     navigate('/login');
   };
 
