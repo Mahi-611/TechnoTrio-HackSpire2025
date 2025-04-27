@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { LineChart, ResponsiveContainer, Line, XAxis, YAxis, Tooltip, CartesianGrid, BarChart, Bar } from 'recharts';
 import { Calendar, PieChart, TrendingUp, Filter } from 'lucide-react';
+import axios from 'axios';
 
 // Mock data - would be replaced with real data from Supabase
 const moodData = [
@@ -21,18 +22,23 @@ const moodData = [
   { date: 'Jan 14', mood: 9, anxiety: 1, energy: 9, sleep: 9 },
 ];
 
-const weeklyAverages = [
-  { week: 'Week 1', mood: 7.1, anxiety: 3.0, energy: 6.4, sleep: 7.6 },
-  { week: 'Week 2', mood: 7.9, anxiety: 2.3, energy: 7.7, sleep: 8.0 },
-];
-
 const ProgressTrackerPage = () => {
+  const [progressData, setProgressData] = useState([]);
+  const [weeklyAverages, setWeeklyAverages] = useState([]);
   const [timeRange, setTimeRange] = useState('14days');
   const [metricFilter, setMetricFilter] = useState('all');
-  
+
+  useEffect(() => {
+    // Fetch progress data from the backend
+    axios.get('/api/progress/progress').then((response) => {
+      setProgressData(response.data.progressData);
+      setWeeklyAverages(response.data.weeklyAverages);
+    });
+  }, []);
+
   // Filter data based on selected time range
-  const filteredData = timeRange === '7days' ? moodData.slice(-7) : moodData;
-  
+  const filteredData = timeRange === '7days' ? progressData.slice(-7) : progressData;
+
   // Determine which metrics to show based on filter
   const showMood = metricFilter === 'all' || metricFilter === 'mood';
   const showAnxiety = metricFilter === 'all' || metricFilter === 'anxiety';

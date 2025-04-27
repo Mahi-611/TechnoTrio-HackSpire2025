@@ -1,9 +1,9 @@
-/* import { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, ArrowRight } from 'lucide-react';
-import { supabase } from '../utils/supabaseClient';
 import AnimatedBackground from '../components/ui/AnimatedBackground';
+import axios from 'axios';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -18,18 +18,13 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const response = await axios.post('/api/auth/login', { email, password });
 
-      if (error) throw error;
-
-      if (data.user) {
+      if (response.data.user) {
         navigate('/dashboard');
       }
     } catch (error: any) {
-      setError(error.message || 'An error occurred during login');
+      setError(error.response?.data?.message || 'An error occurred during login');
     } finally {
       setLoading(false);
     }
@@ -128,4 +123,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;*/
+export default LoginPage;

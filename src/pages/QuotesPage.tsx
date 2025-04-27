@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BookOpen, Heart, Share2, Bookmark, RotateCcw } from 'lucide-react';
+import axios from 'axios';
 
 // Mock quotes data - would be replaced with API calls
 const quotesCollection = [
@@ -65,9 +66,12 @@ const QuotesPage = () => {
   const [dailyQuote, setDailyQuote] = useState(quotesCollection[0]);
   
   useEffect(() => {
-    // Set a random quote as daily quote
-    const randomIndex = Math.floor(Math.random() * quotesCollection.length);
-    setDailyQuote(quotesCollection[randomIndex]);
+    // Fetch quotes and categories from the backend
+    axios.get('/api/quotes/quotes').then((response) => {
+      setQuotes(response.data.quotes);
+      setFilteredQuotes(response.data.quotes);
+      setDailyQuote(response.data.quotes[0]);
+    });
   }, []);
   
   useEffect(() => {

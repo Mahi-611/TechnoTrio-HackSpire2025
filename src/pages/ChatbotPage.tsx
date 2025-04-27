@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Bot, Mic, MicOff, User } from 'lucide-react';
+import axios from 'axios';
 
 interface Message {
   id: number;
@@ -28,30 +29,9 @@ const ChatbotPage = () => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
   
-  // Mock responses - would be replaced with actual ML/AI responses
-  const getBotResponse = (message: string): string => {
-    const lowerMessage = message.toLowerCase();
-    
-    if (lowerMessage.includes('sad') || lowerMessage.includes('depressed') || lowerMessage.includes('unhappy')) {
-      return "I'm sorry to hear you're feeling down. Remember that it's okay to feel this way sometimes. Would you like to try a quick breathing exercise to help center yourself?";
-    } else if (lowerMessage.includes('anxious') || lowerMessage.includes('worried') || lowerMessage.includes('stress')) {
-      return "I notice you're feeling anxious. Let's take a moment together. Try focusing on five things you can see, four things you can touch, three things you can hear, two things you can smell, and one thing you can taste.";
-    } else if (lowerMessage.includes('happy') || lowerMessage.includes('good') || lowerMessage.includes('great')) {
-      return "I'm so glad to hear you're feeling good today! That's wonderful. What's something that contributed to your positive mood?";
-    } else if (lowerMessage.includes('tired') || lowerMessage.includes('exhausted') || lowerMessage.includes('sleep')) {
-      return "Being tired can really affect how we feel. Have you considered trying a relaxing bedtime routine? Even small changes to your sleep habits can make a big difference.";
-    } else if (lowerMessage.includes('thank')) {
-      return "You're very welcome! I'm here anytime you need to talk or need some support on your wellness journey. 🌻";
-    } else if (lowerMessage.includes('exercise') || lowerMessage.includes('workout')) {
-      return "Physical activity is great for mental wellness! Even a short 10-minute walk can boost your mood through the release of endorphins. What kind of movement do you enjoy?";
-    } else {
-      return "Thank you for sharing that with me. How does that make you feel? Remember that acknowledging your emotions is an important step in your wellness journey. 🌿";
-    }
-  };
-  
   const handleSendMessage = () => {
     if (input.trim() === '') return;
-    
+
     // Add user message
     const userMessage: Message = {
       id: messages.length + 1,
@@ -59,21 +39,33 @@ const ChatbotPage = () => {
       isBot: false,
       timestamp: new Date(),
     };
-    
+
     setMessages([...messages, userMessage]);
     setInput('');
-    
-    // Simulate bot typing
-    setTimeout(() => {
-      const botMessage: Message = {
-        id: messages.length + 2,
-        text: getBotResponse(input),
-        isBot: true,
-        timestamp: new Date(),
-      };
-      
-      setMessages((prevMessages) => [...prevMessages, botMessage]);
-    }, 1000);
+
+    // Fetch bot response from backend
+    axios
+      .post('/api/chatbot', { message: input })
+      .then((response) => {
+        const botMessage: Message = {
+          id: messages.length + 2,
+          text: response.data.response,
+          isBot: true,
+          timestamp: new Date(),
+        };
+
+        setMessages((prevMessages) => [...prevMessages, botMessage]);
+      })
+      .catch(() => {
+        const errorMessage: Message = {
+          id: messages.length + 2,
+          text: "I'm sorry, I couldn't process your message. Please try again later.",
+          isBot: true,
+          timestamp: new Date(),
+        };
+
+        setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      });
   };
   
   const toggleListening = () => {

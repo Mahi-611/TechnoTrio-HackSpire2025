@@ -1,31 +1,27 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Heart, ArrowRight, MessageCircle, LineChart, Quote } from 'lucide-react';
 import AnimatedBackground from '../components/ui/AnimatedBackground';
 
 const LandingPage = () => {
-  const features = [
-    {
-      icon: <MessageCircle size={32} className="text-primary dark:text-primary-light" />,
-      title: 'InnoBot Chat Assistant',
-      description: 'Engage with our AI assistant designed to support your mental wellness journey with compassion and understanding.',
-    },
-    {
-      icon: <Heart size={32} className="text-primary dark:text-primary-light" />,
-      title: 'Daily Affirmations',
-      description: 'Start each day with personalized positive affirmations tailored to your current emotional state.',
-    },
-    {
-      icon: <LineChart size={32} className="text-primary dark:text-primary-light" />,
-      title: 'Progress Tracking',
-      description: 'Monitor your emotional wellbeing over time with intuitive visualizations and insightful analytics.',
-    },
-    {
-      icon: <Quote size={32} className="text-primary dark:text-primary-light" />,
-      title: 'Motivational Quotes',
-      description: 'Draw inspiration from our curated collection of quotes that inspire peace, growth, and self-compassion.',
-    },
-  ];
+  const [heroSection, setHeroSection] = useState({
+    title: '',
+    subtitle: '',
+    image: '',
+    ctaPrimary: { text: '', link: '' },
+    ctaSecondary: { text: '', link: '' },
+  });
+  const [features, setFeatures] = useState([]);
+
+  useEffect(() => {
+    // Fetch landing page data from the backend
+    axios.get('/api/landing/landing-data').then((response) => {
+      setHeroSection(response.data.heroSection);
+      setFeatures(response.data.features);
+    });
+  }, []);
 
   return (
     <AnimatedBackground className="min-h-screen">
@@ -40,7 +36,7 @@ const LandingPage = () => {
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-white mb-6"
             >
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
-                InnerNova
+                {heroSection.title}
               </span>
             </motion.h1>
             
@@ -50,7 +46,7 @@ const LandingPage = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-xl md:text-2xl text-neutral-700 dark:text-neutral-300 mb-10 max-w-3xl mx-auto"
             >
-              A gentle space for your thoughts to rest, reflect, and rise.
+              {heroSection.subtitle}
             </motion.p>
             
             <motion.div
@@ -59,11 +55,11 @@ const LandingPage = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-wrap justify-center gap-4"
             >
-              <Link to="/dashboard" className="btn-primary">
-                Get Started <ArrowRight size={18} className="ml-2 inline" />
+              <Link to={heroSection.ctaPrimary.link} className="btn-primary">
+                {heroSection.ctaPrimary.text} <ArrowRight size={18} className="ml-2 inline" />
               </Link>
-              <Link to="/chat" className="btn-outline">
-                Chat with InnoBot
+              <Link to={heroSection.ctaSecondary.link} className="btn-outline">
+                {heroSection.ctaSecondary.text}
               </Link>
             </motion.div>
           </div>
@@ -77,7 +73,7 @@ const LandingPage = () => {
             <div className="relative">
               <div className="rounded-2xl overflow-hidden shadow-xl">
                 <img
-                  src="https://images.pexels.com/photos/3560044/pexels-photo-3560044.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  src={heroSection.image}
                   alt="InnerNova Dashboard Preview"
                   className="w-full h-auto object-cover"
                 />
@@ -110,7 +106,12 @@ const LandingPage = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="card hover:shadow-lg"
               >
-                <div className="mb-4">{feature.icon}</div>
+                <div className="mb-4">
+                  {feature.icon === 'message-circle' && <MessageCircle size={32} className="text-primary dark:text-primary-light" />}
+                  {feature.icon === 'heart' && <Heart size={32} className="text-primary dark:text-primary-light" />}
+                  {feature.icon === 'line-chart' && <LineChart size={32} className="text-primary dark:text-primary-light" />}
+                  {feature.icon === 'quote' && <Quote size={32} className="text-primary dark:text-primary-light" />}
+                </div>
                 <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2">{feature.title}</h3>
                 <p className="text-neutral-700 dark:text-neutral-400">{feature.description}</p>
               </motion.div>

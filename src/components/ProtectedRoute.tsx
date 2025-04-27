@@ -1,12 +1,30 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { user, loading } = useAuth();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Verify authentication
+    axios
+      .get('/api/auth/verify', {
+        headers: { Authorization: `Bearer valid-token` }, // Replace with real token logic
+      })
+      .then(() => {
+        setIsAuthenticated(true);
+        setLoading(false);
+      })
+      .catch(() => {
+        setIsAuthenticated(false);
+        setLoading(false);
+      });
+  }, []);
 
   if (loading) {
     return (
@@ -16,7 +34,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
   }
 
-  if (!user) {
+  if (!isAuthenticated) {
     return <Navigate to="/login" />;
   }
 
